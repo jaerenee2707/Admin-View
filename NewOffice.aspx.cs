@@ -11,9 +11,6 @@ namespace WebApplication1 {
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            dob.Attributes.Add("placeholder", "yyyy-mm-dd");
-            dob.Attributes.Add("type", "date");
-            dob.Attributes.Add("onkeydown", "return false");
             welcomeHeader.InnerText = "Welcome, Administrator!";
 
         }
