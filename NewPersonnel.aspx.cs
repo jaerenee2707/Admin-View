@@ -37,7 +37,6 @@ namespace WebApplication1 {
                     command.Parameters.AddWithValue("@Minitial", mi.Text);
                     command.Parameters.AddWithValue("@lname", lname.Text);
                     command.Parameters.AddWithValue("@dob", dob.Text);
-                    command.Parameters.AddWithValue("@specialty", specialty.Text);
                     command.Parameters.AddWithValue("@phone_num", phone_num.Text);
                     command.Parameters.AddWithValue("@email", email.Text);
                     command.Parameters.AddWithValue("@office", office.Text);
@@ -68,7 +67,15 @@ namespace WebApplication1 {
         }
         
         protected void ButtonClear_Click(object sender, EventArgs e){
-            Address.Text.Clear();
+            fname.Text.Clear();
+            role.Text.Clear();
+            lname.Text.Clear();
+            dob.Text.Clear();
+            phone_num.Text.Clear();
+            email.Text.Clear();
+            office.Text.Clear();
+            specialty.Text.Clear();
+            mi.Text.Clear();  
         }
         protected void ButtonExit_Click(object sender, EventArgs e){
             Response.Redirect("AdminView.aspx?AdminID=");//doesn't have + adminId in url
