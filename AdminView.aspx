@@ -85,13 +85,13 @@
         <br />
 
         <div style="text-align: center; margin-bottom:2cm; margin-top:1px">
-                <asp:Button ID="AddPer" runat="server" OnClick="Button1_Click" Text="Add new Personnel" style="margin-left: 0px" />
+                <asp:Button ID="AddPer" runat="server" OnClick="ButtonAP_Click" Text="Add new Personnel" style="margin-left: 0px" />
 
-                <asp:Button ID="AddOff" runat="server" OnClick="Button1_Click" Text="Add new Office" style="margin-left: 0px" />
+                <asp:Button ID="AddOff" runat="server" OnClick="ButtonAO_Click" Text="Add new Office" style="margin-left: 0px" />
 
-                <asp:Button ID="RemOff" runat="server" OnClick="Button1_Click" Text="Remove Office" style="margin-left: 0px" />
+                <asp:Button ID="RemOff" runat="server" OnClick="ButtonRO_Click" Text="Remove Office" style="margin-left: 0px" />
 
-                <asp:Button ID="RemPer" runat="server" OnClick="Button1_Click" Text="Remove Personnel" style="margin-left: 0px" />
+                <asp:Button ID="RemPer" runat="server" OnClick="ButtonRP_Click" Text="Remove Personnel" style="margin-left: 0px" />
         </div>
     </form>
 
