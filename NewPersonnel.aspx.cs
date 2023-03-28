@@ -9,6 +9,14 @@ using MySql.Data.MySqlClient;
 namespace WebApplication1 {
     public partial class AdminView : System.Web.UI.Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            dob.Attributes.Add("placeholder", "yyyy-mm-dd");
+            dob.Attributes.Add("type", "date");
+            dob.Attributes.Add("onkeydown", "return false");
+            welcomeHeader.InnerText = "Welcome, Administrator!";
+
+        }
         protected void SUBMIT_Click_addPer(object sender, EventArgs e)
         {
             string connString = "Server=medicaldatabase3380.mysql.database.azure.com;Database=medicalclinicdb2;Uid=dbadmin;Pwd=Medical123!;";
