@@ -118,6 +118,12 @@
                 </fieldset>
                 &nbsp;
             </div>
+            <div>
+                <asp:Button ID="clear" runat="server" OnClick="ButtonClear_Click" Text="Clear Entries" style="margin-left: 0px" />
+            </div>
+            <div>
+                <asp:Button ID="exit" runat="server" OnClick="ButtonExit_Click" Text="Return to Admin Page" style="margin-left: 0px" />
+            </div>
             <script>
                 //Client-side jQuery to cancel form submission if required fields empty
                 $(function () {
