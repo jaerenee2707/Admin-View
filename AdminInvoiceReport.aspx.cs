@@ -68,11 +68,51 @@ namespace WebApplication1
                 connection.Open();
                 string selectedValue = DropDownList1.SelectedValue;
                 string query = "";
-                string query_sum = "";
-                query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and and O.officeAddress = @officeAddress union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress";
+
+                if (selectedValue == "")
+                {
+                    if (end_date == "" && start_date == "")
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I";
+                    }
+                    else if (end_date == "")
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.appointmentDate >= @start_date union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spacesunion Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.appointmentDate >= @start_date";
+                    }
+                    else if (start_date == "")
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID AND A.appointmentDate <= @end_date union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spacesunion Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.appointmentDate <= @end_date";
+                    }
+                    else
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.appointmentDate >= @start_date AND A.appointmentDate <= @end_date union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spacesunion Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.appointmentDate >= @start_date AND A.appointmentDate <= @end_date";
+                    }
+                }
+                else
+                {
+                    if (end_date == "" && start_date == "")
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress";
+                    }
+                    else if (end_date == "")
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress and A.appointmentDate >= @start_date union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress and A.appointmentDate >= @start_date";
+                    }
+                    else if (start_date == "")
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress AND A.appointmentDate <= @end_date union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress AND A.appointmentDate <= @end_date";
+                    }
+                    else
+                    {
+                        query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress and A.appointmentDate >= @start_date AND A.appointmentDate <= @end_date union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress and A.appointmentDate >= @start_date AND A.appointmentDate <= @end_date";
+                    }
+                }
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@officeAddress", selectedValue);
+                command.Parameters.AddWithValue("@start_date", start_date);
+                command.Parameters.AddWithValue("@end_date", end_date);
+
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
@@ -92,8 +132,14 @@ namespace WebApplication1
             Font titleFont = FontFactory.GetFont("Arial", 18, Font.BOLD);
             string selectedValue = DropDownList1.SelectedValue;
             string title = "";
-            title = "Financial Report of " + selectedValue;
-
+            if (selectedValue == "")
+            {
+                title = "Financial Report of All Offices";
+            }  
+            else
+            {
+                title = "Financial Report of " + selectedValue;
+            }
             Paragraph titleParagraph = new Paragraph(title, titleFont);
             titleParagraph.Alignment = Element.ALIGN_CENTER;
             titleParagraph.SpacingAfter = 20;
