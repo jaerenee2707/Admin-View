@@ -10,17 +10,18 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.html.simpleparser;
+
 namespace WebApplication1
 {
-    public partial class AdminReportsaspx : System.Web.UI.Page
+    public partial class AdminInvoiceReport : System.Web.UI.Page
     {
         private string adminID;
         protected void Page_Load(object sender, EventArgs e)
         {
             adminID = Request.QueryString["adminID"];
-            
-            if(IsPostBack)
-            { 
+
+            if (!IsPostBack)
+            {
                 // populate office locations
                 string connString = "Server=medicaldatabase3380.mysql.database.azure.com;Database=medicalclinicdb2;Uid=dbadmin;Pwd=Medical123!;";
                 string query = "SELECT officeAddress from office";
@@ -68,10 +69,11 @@ namespace WebApplication1
                 string selectedValue = DropDownList1.SelectedValue;
                 string query = "";
                 string query_sum = "";
-                command.Parameters.AddWithValue("@officeID", selectedValue);
-                query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeID = @officeID union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeID = @officeID";
+                query = "Select I.total, I.claim, I.paid_amount From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeID = @officeID union SELECT SPACE(10) AS spaces, SPACE(10) AS spaces, SPACE(10) AS spaces union Select SUM(I.total), SUM(I.claim), SUM(I.paid_amount) From invoice as I, visit_details as V, appointment as A, office as O WHERE I.reportID = V.reportID and V.appointmentID = A.appointmentID and A.officeID = O.officeID and O.officeAddress = @officeAddress";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@officeAddress", selectedValue);
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
