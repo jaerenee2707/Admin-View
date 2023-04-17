@@ -42,6 +42,12 @@
                             <asp:DropDownList ID="DropDownList1" runat="server" Width="140px" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
                             </asp:DropDownList>
                         </div>
+                        <br>
+                        <label for="start-date">Start Date:</label>
+                        <input type="date" id="start-date" name="start-date">
+
+                        <label for="end-date">End Date:</label>
+                        <input type="date" id="end-date" name="end-date">
                     </div>
                     <div>
                         <asp:Button ID="btnGenerateReport" runat="server" Text="Generate" OnClick="btnGenerateReport_Click" />
